@@ -21,7 +21,7 @@ catch(Exception $e){
 $html = '';    // 最終的に出力する
 $numbers = str_split((string)$number);  //1文字ずつ分割し、配列にする
 for($i=0; $i<count($numbers); $i++){
-  $html .= sprintf('<img src="image/number%02d.png">', $numbers[$i]);
+  $html .= sprintf('<img src="image/number%02d_s.png">', $numbers[$i]);
 }
 
 ?><!DOCTYPE html>
@@ -31,6 +31,6 @@ for($i=0; $i<count($numbers); $i++){
   <title>カウンター2</title>
 </head>
 <body>
-<?= $html ?>
+あなたは当ページを訪れた累計<?= $html ?>人目の訪問者です。
 </body>
 </html>

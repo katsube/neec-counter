@@ -21,6 +21,6 @@ catch(Exception $e){
   <title>カウンター1</title>
 </head>
 <body>
-<?= $number ?>
+あなたは当ページを訪れた累計<?= $number ?>人目の訪問者です。
 </body>
 </html>

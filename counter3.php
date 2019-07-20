@@ -4,8 +4,8 @@ require_once('AccessCounter.php');
 //-----------------------------------
 // 定数定義
 //-----------------------------------
-define('COUNT_IMAGE_WIDTH', 167);     // カウンター画像の横幅(1枚あたり)
-define('COUNT_IMAGE_HEIGHT', 197);    // カウンター画像の高さ(1枚あたり)
+define('COUNT_IMAGE_WIDTH', 30);     // カウンター画像の横幅(1枚あたり)
+define('COUNT_IMAGE_HEIGHT', 35);    // カウンター画像の高さ(1枚あたり)
 
 //-----------------------------------
 // カウンターの値を取得
@@ -64,7 +64,7 @@ function makeImageList(int $number){
   $list = [];
   $values = str_split((string)$number);
   for($i=0; $i<count($values); $i++){
-    array_push($list, sprintf('image/number%02d.png', $values[$i]));
+    array_push($list, sprintf('image/number%02d_s.png', $values[$i]));
   }
   return($list);
 }
