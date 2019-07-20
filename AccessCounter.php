@@ -20,7 +20,7 @@ class AccessCounter {
 
   // エラーコードの一覧
   private $error_cd = [
-    'E001' => 'Data File is not file',     // ファイルが存在しないか、ファイルでｈない
+    'E001' => 'Data File is not file',     // ファイルが存在しないか、ファイルではない
     'E002' => 'Data File can not read',    // ファイルが読み込めない
     'E003' => 'Data File can not write',   // ファイルに書き込めない
     'E004' => 'Invalid open mode'          // 不正なモードでファイルを開こうとした
