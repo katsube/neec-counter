@@ -41,7 +41,7 @@ class AccessCounter {
     // ファイルを開く
     $this->fp = $this->_openDataFile($this->file, 'a+');
     if( $this->fp === false ){
-	  $message = $this->_makeErrorMessage();    // エラーメッセージ作成
+      $message = $this->_makeErrorMessage();    // エラーメッセージ作成
       throw new Exception($message);            // 例外を発生
     }
 
@@ -58,7 +58,7 @@ class AccessCounter {
    * @access public
    */
   function __destruct(){
-	// 今回はデストラクタは利用しません。
+    // 今回はデストラクタは利用しません。
     // $this->finish();
   }
 
@@ -172,7 +172,7 @@ class AccessCounter {
    */
   private function _makeErrorMessage(){
     return(
-		sprintf('[%s] %s (%s)',$this->error['cd'], $this->error['message'], $this->error['target'])
-	);
+      sprintf('[%s] %s (%s)',$this->error['cd'], $this->error['message'], $this->error['target'])
+    );
   }
 }
