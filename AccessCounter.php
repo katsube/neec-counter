@@ -5,12 +5,20 @@
  * @version 1.0.0
  * @author M.Katsube <katsubemakito@gmail.com>
  */
-class AccessCounter{
+class AccessCounter {
+  //---------------------------------------------
+  // クラス内定数
+  //---------------------------------------------
+  const USE_FLOCK = true;  //flock()を利用する場合はtrue
+
+  //---------------------------------------------
+  // プロパティ
+  //---------------------------------------------
   private $file  = 'data/counter.txt';  // データファイル
   private $fp    = null;  // ファイルポインタ
   private $error = null;  // エラーメッセージ
 
-  //エラーコードの一覧
+  // エラーコードの一覧
   private $error_cd = [
     'E001' => 'Data File is not file',     // ファイルが存在しないか、ファイルでｈない
     'E002' => 'Data File can not read',    // ファイルが読み込めない
@@ -33,12 +41,14 @@ class AccessCounter{
     // ファイルを開く
     $this->fp = $this->_openDataFile($this->file, 'a+');
     if( $this->fp === false ){
-      $message = sprintf('[%s] %s (%s)',$this->error['cd'], $this->error['message'], $this->error['target']);
-      throw new Exception($message);
+	  $message = $this->_makeErrorMessage();    // エラーメッセージ作成
+      throw new Exception($message);            // 例外を発生
     }
 
     // ロックする(排他制御)
-    flock($this->fp, LOCK_EX);
+    if( self::USE_FLOCK ){
+      flock($this->fp, LOCK_EX);
+    }
   }
 
   /**
@@ -48,11 +58,8 @@ class AccessCounter{
    * @access public
    */
   function __destruct(){
-    // ロックを解除する
-    flock($this->fp, LOCK_UN);
-
-    // ファイルを閉じる
-    fclose($this->fp);
+	// 今回はデストラクタは利用しません。
+    // $this->finish();
   }
 
   /**
@@ -86,6 +93,22 @@ class AccessCounter{
     ftruncate($this->fp, 0);      // ファイルサイズをゼロに
     rewind($this->fp);            // ファイルポインタを先頭に戻す
     fwrite($this->fp, $value+1);  // 書き込む
+  }
+
+  /**
+   * 終了処理を行う
+   *
+   * @return void
+   * @access public
+   */
+  function finish(){
+    // ロックを解除する
+    if( self::USE_FLOCK ){
+      flock($this->fp, LOCK_UN);
+    }
+
+    // ファイルを閉じる
+    fclose($this->fp);
   }
 
   /**
@@ -139,5 +162,17 @@ class AccessCounter{
       , 'memo'    => $memo
       , 'target'  => ($target === null)?  $this->file:$target
     ];
+  }
+
+  /**
+   * エラーメッセージを作成
+   *
+   * @return string
+   * @access private
+   */
+  private function _makeErrorMessage(){
+    return(
+		sprintf('[%s] %s (%s)',$this->error['cd'], $this->error['message'], $this->error['target'])
+	);
   }
 }

@@ -47,7 +47,48 @@ http://example.com/counter
 
 * `example.com`の部分は設置したサーバや環境の物に置き換えてください。
 
+## 排他制御の実験
+大量にアクセスがあった際に排他制御(`flock()`)を行わないとどういった自体になるか実験するための教材を同梱しています。
+
+### 事前準備
+データファイルの値を`1`に戻します。テキストエディタなどで編集するか`bin/reset.sh`コマンドを用います。
+```
+$ cd counter/
+$ bin/reset.sh
+```
+
+また`flock()`を利用するか`AccessCounter.php`クラスを編集し設定します。定数`USE_FLOCK`を`true`にすれば利用、`false`であれば利用しません。
+```php
+class AccessCounter {
+  //---------------------------------------------
+  // クラス内定数
+  //---------------------------------------------
+  const USE_FLOCK = true;  //flock()を利用する場合はtrue
+```
+### 実行
+Terminalを2つ開きます。
+片方でデータファイルの状態を監視、もう片方で大量のリクエストを投げます。
+
+
+#### Terminal その1
+`bin/monitor.php`で20msec置きにファイルの状態を表示します。
+
+```
+$ cd counter/
+$ php bin/monitor.php
+```
+
+#### Terminal その2
+`bin/attack.sh`で同時接続数50、合計5000リクエストを発生させます。
+```
+$ cd counter/
+$ php bin/attack.php
+```
+
+
 ## 動作環境
 
 * 一般的なLAMP環境での実行を想定しています。
-* PHPは7.0以上、`counter3.php`の実行にはGDが有効になっている必要があります。
+* PHPは7.0以上
+    * `counter3.php`の実行にはGDが有効になっている必要があります。
+* 排他制御の実験には`ab`コマンドが必要です。

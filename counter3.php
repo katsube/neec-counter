@@ -14,6 +14,7 @@ try{
   $counter = new AccessCounter();
   $number  = $counter->getCount();  // カウンターの値を取得
   $counter->addCount();             // カウンターを加算
+  $counter->finish();               // 終了処理
 }
 catch(Exception $e){
   echo $e->getMessage();
