@@ -5,4 +5,4 @@
 #
 
 ### 同時接続数50、計5000リクエスト
-ab -n 5000 -c 50 http://localhost/neec-counter/counter1.php
+ab -n 5000 -c 50 http://localhost/counter/counter1.php
