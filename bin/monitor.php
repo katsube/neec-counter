@@ -20,7 +20,7 @@ while ( true ){
   $buff = rtrim($buff);                  // 改行や不要な余白を削除
 
   // 前回取って来たものと違えば表示
-  if ( $befor !== $buff ){
+  if ( ($buff !== "") && ($befor !== $buff) ){    //データが空の場合はスキップ
     echo "$buff\n";  // 表示
     $befor = $buff;  // 入れ替え
   }
